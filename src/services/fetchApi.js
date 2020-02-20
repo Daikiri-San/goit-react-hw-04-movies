@@ -2,7 +2,7 @@ const key = '259c02d1f1f516a6001436d2cce8084d';
 const baseURL = 'https://api.themoviedb.org/3';
 const dayTrendingURL = '/trending/movie/day';
 
-const fetchApi = {
+export default {
   fetchTrendMovies() {
     return fetch(`${baseURL}${dayTrendingURL}?api_key=${key}`)
       .then(res => res.json())
@@ -39,5 +39,3 @@ const fetchApi = {
       .catch(console.log);
   },
 };
-
-export default fetchApi;
