@@ -26,7 +26,7 @@ const Item = styled.li`
     height: 400px;
     width: 19%;
     max-width: 30rem;
-    margin-bottom: 8rem;
+    margin-bottom: 9rem;
     margin-right: 0;
   }
 
@@ -55,13 +55,16 @@ const Text = styled.p`
   }
 `;
 
-const ProfileAvatar = styled.img.attrs(props => ({
-  src:
-    props.src ||
-    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
+const ProfileAvatar = styled.img.attrs(
+  ({
+    src = 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
+    alt,
+  }) => ({
+    src: src,
 
-  alt: `Avatar of ${props.alt}` || 'Avatar',
-}))`
+    alt: `Avatar of ${alt}` || 'Avatar',
+  }),
+)`
   margin: 0 auto;
   margin-bottom: 0.6rem;
   min-width: 7rem;

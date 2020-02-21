@@ -19,6 +19,7 @@ class Movies extends Component {
     moviesList: [],
     loading: false,
     error: null,
+    searched: false,
   };
 
   componentDidMount() {
@@ -38,7 +39,12 @@ class Movies extends Component {
         });
       })
       .catch(error => this.setState({ error }))
-      .finally(setTimeout(this.completeSearch, 200));
+      .finally(
+        this.setState({
+          loading: false,
+          searched: true,
+        }),
+      );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -57,12 +63,13 @@ class Movies extends Component {
   completeSearch = () => {
     this.setState({
       loading: false,
+      searched: true,
     });
   };
 
   fetchMoviesOnSearchQuery = query => {
     this.setState({
-      loading: false,
+      loading: true,
     });
 
     fetchApi
@@ -73,7 +80,12 @@ class Movies extends Component {
         });
       })
       .catch(error => this.setState({ error }))
-      .finally(setTimeout(this.completeSearch, 200));
+      .finally(
+        this.setState({
+          loading: false,
+          searched: true,
+        }),
+      );
   };
 
   handleChangeQuery = query => {
@@ -84,7 +96,7 @@ class Movies extends Component {
   };
 
   render() {
-    const { moviesList, loading, error } = this.state;
+    const { moviesList, loading, error, searched } = this.state;
     const { location } = this.props;
 
     return (
@@ -99,7 +111,7 @@ class Movies extends Component {
         {moviesList.length > 0 && (
           <ListOfMovies moviesList={moviesList} location={location} />
         )}
-        {moviesList.length === 0 && !loading && (
+        {moviesList.length === 0 && !loading && searched && (
           <Notification
             message={`There are no such movies... Try another one :)`}
           />

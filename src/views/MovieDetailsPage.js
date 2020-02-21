@@ -19,12 +19,12 @@ const Container = styled.div`
   margin-bottom: 4rem;
 `;
 
-const MoviePoster = styled.img.attrs(props => ({
+const MoviePoster = styled.img.attrs(({ src, alt }) => ({
   src:
-    `http://image.tmdb.org/t/p/w500${props.src}` ||
-    'https://image.shutterstock.com/image-vector/no-image-available-icon-vector-260nw-1323742826.jpg',
+    src ||
+    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
 
-  alt: `Poster of ${props.alt}` || 'Poster',
+  alt: `Poster of ${alt}` || 'Poster',
 }))`
   margin: 0 auto;
   min-width: 20rem;
@@ -128,6 +128,9 @@ class MovieDetailsPage extends Component {
   render() {
     const { exactMovie, loading, error } = this.state;
     const { match } = this.props;
+    if (exactMovie && exactMovie.poster_path) {
+      exactMovie.poster_path = `http://image.tmdb.org/t/p/w500${exactMovie.poster_path}`;
+    }
 
     return (
       <>

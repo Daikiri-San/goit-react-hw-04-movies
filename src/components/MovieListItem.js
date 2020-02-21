@@ -89,12 +89,12 @@ const MovieTitle = styled.p`
   left: 10px;
 `;
 
-const MoviePoster = styled.img.attrs(props => ({
+const MoviePoster = styled.img.attrs(({ src, alt }) => ({
   src:
-    props.src ||
+    src ||
     'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
 
-  alt: `Poster of ${props.alt}` || 'Poster',
+  alt: `Poster of ${alt}` || 'Poster',
 }))`
   object-fit: cover;
   height: 100%;
