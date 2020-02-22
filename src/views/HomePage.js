@@ -4,6 +4,7 @@ import fetchApi from '../services/fetchApi';
 import MovieList from '../components/MovieList';
 import Spinner from '../components/Spinner';
 import Notification from '../components/Notification';
+import IntObsInfiniteScroll from '../components/IntObsInfiniteScroll';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -25,18 +26,26 @@ class HomePage extends Component {
     moviesTrends: [],
     loading: false,
     error: null,
+    allResultsGotten: true,
   };
 
   componentDidMount() {
+    fetchApi.trendMovies.page = 1;
+    this.fetchTrendMovies();
+  }
+
+  fetchTrendMovies = () => {
     this.setState({
       loading: true,
     });
-    fetchApi
-      .fetchTrendMovies()
-      .then(({ results }) => {
-        this.setState({
-          moviesTrends: results,
-        });
+    fetchApi.trendMovies
+      .fetchMovies()
+      .then(resolve => {
+        this.setState(prevState => ({
+          moviesTrends: [...prevState.moviesTrends, ...resolve.results],
+          allResultsGotten: fetchApi.trendMovies.page === resolve.total_pages,
+        }));
+        fetchApi.trendMovies.page += 1;
       })
       .catch(error => this.setState({ error }))
       .finally(
@@ -44,10 +53,10 @@ class HomePage extends Component {
           loading: false,
         }),
       );
-  }
+  };
 
   render() {
-    const { moviesTrends, loading, error } = this.state;
+    const { moviesTrends, loading, error, allResultsGotten } = this.state;
     const { location } = this.props;
 
     return (
@@ -62,6 +71,9 @@ class HomePage extends Component {
         {loading && <Spinner />}
         {moviesTrends.length > 0 && (
           <MovieList moviesList={moviesTrends} location={location} />
+        )}
+        {!allResultsGotten && (
+          <IntObsInfiniteScroll fetchFunction={this.fetchTrendMovies} />
         )}
       </Container>
     );

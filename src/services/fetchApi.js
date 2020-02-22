@@ -3,16 +3,34 @@ const baseURL = 'https://api.themoviedb.org/3';
 const dayTrendingURL = '/trending/movie/day';
 
 export default {
-  fetchTrendMovies() {
-    return fetch(`${baseURL}${dayTrendingURL}?api_key=${key}`)
-      .then(res => res.json())
-      .catch(console.log);
+  trendMovies: {
+    page: 1,
+    fetchMovies() {
+      return fetch(
+        `${baseURL}${dayTrendingURL}?api_key=${key}&page=${this.page}`,
+      )
+        .then(res => res.json())
+        .catch(console.log);
+    },
   },
 
-  fetchSearchedFilms(query) {
-    return fetch(`${baseURL}/search/movie?api_key=${key}&query=${query}`)
-      .then(res => res.json())
-      .catch(console.log);
+  popularMovies: {
+    page: 1,
+    fetchMovies() {
+      return fetch(`${baseURL}/movie/popular?api_key=${key}&page=${this.page}`)
+        .then(res => res.json())
+        .catch(console.log);
+    },
+  },
+  searchMovies: {
+    page: 1,
+    fetchMovies(query) {
+      return fetch(
+        `${baseURL}/search/movie?api_key=${key}&query=${query}&page=${this.page}`,
+      )
+        .then(res => res.json())
+        .catch(console.log);
+    },
   },
 
   fetchMovieDetails(id) {
@@ -29,12 +47,6 @@ export default {
 
   fetchMovieReviews(id) {
     return fetch(`${baseURL}/movie/${id}/reviews?api_key=${key}`)
-      .then(res => res.json())
-      .catch(console.log);
-  },
-
-  fetchPopularFilms() {
-    return fetch(`${baseURL}/movie/popular?api_key=${key}`)
       .then(res => res.json())
       .catch(console.log);
   },

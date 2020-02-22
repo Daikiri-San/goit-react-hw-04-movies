@@ -134,6 +134,7 @@ MovieListItem.defaultProps = {
   poster:
     'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
   votes: 0,
+  releaseDate: ' -- -12-31',
 };
 
 export default MovieListItem;

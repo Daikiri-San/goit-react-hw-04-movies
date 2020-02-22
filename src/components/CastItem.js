@@ -55,16 +55,13 @@ const Text = styled.p`
   }
 `;
 
-const ProfileAvatar = styled.img.attrs(
-  ({
-    src = 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
-    alt,
-  }) => ({
-    src: src,
+const ProfileAvatar = styled.img.attrs(({ src, alt }) => ({
+  src:
+    src ||
+    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
 
-    alt: `Avatar of ${alt}` || 'Avatar',
-  }),
-)`
+  alt: `Avatar of ${alt}` || 'Avatar',
+}))`
   margin: 0 auto;
   margin-bottom: 0.6rem;
   min-width: 7rem;
