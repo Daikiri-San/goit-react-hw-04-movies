@@ -56,10 +56,9 @@ const Text = styled.p`
 `;
 
 const ProfileAvatar = styled.img.attrs(({ src, alt }) => ({
-  src:
-    src ||
-    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
-
+  src: src
+    ? `http://image.tmdb.org/t/p/w500${src}`
+    : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
   alt: `Avatar of ${alt}` || 'Avatar',
 }))`
   margin: 0 auto;
@@ -71,9 +70,6 @@ const ProfileAvatar = styled.img.attrs(({ src, alt }) => ({
 `;
 
 function CastItem({ avatar, name, character }) {
-  if (avatar) {
-    avatar = `http://image.tmdb.org/t/p/w500${avatar}`;
-  }
   return (
     <Item>
       <ProfileAvatar src={avatar} alt={name} />

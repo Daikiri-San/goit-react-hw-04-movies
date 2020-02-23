@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import fetchApi from '../services/fetchApi';
 import routes from '../routes';
 import DetailsNavigation from '../components/DetailsNavigation';
-import Cast from './Cast';
-import Reviews from './Reviews';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import Notification from '../components/Notification';
+
+const Cast = lazy(() => import('./Cast'));
+const Reviews = lazy(() => import('./Reviews'));
 
 const Container = styled.div`
   width: 88vw;
@@ -20,9 +21,9 @@ const Container = styled.div`
 `;
 
 const MoviePoster = styled.img.attrs(({ src, alt }) => ({
-  src:
-    src ||
-    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
+  src: src
+    ? `http://image.tmdb.org/t/p/w500${src}`
+    : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
 
   alt: `Poster of ${alt}` || 'Poster',
 }))`
@@ -128,9 +129,6 @@ class MovieDetailsPage extends Component {
   render() {
     const { exactMovie, loading, error } = this.state;
     const { match } = this.props;
-    if (exactMovie && exactMovie.poster_path) {
-      exactMovie.poster_path = `http://image.tmdb.org/t/p/w500${exactMovie.poster_path}`;
-    }
 
     return (
       <>
@@ -171,10 +169,12 @@ class MovieDetailsPage extends Component {
               castMatch={`${match.url}/cast`}
               reviewMatch={`${match.url}/reviews`}
             />
-            <Switch>
-              <Route path={`${match.path}/cast`} component={Cast} />
-              <Route path={`${match.path}/reviews`} component={Reviews} />
-            </Switch>
+            <Suspense fallback={<Spinner />}>
+              <Switch>
+                <Route path={`${match.path}/cast`} component={Cast} />
+                <Route path={`${match.path}/reviews`} component={Reviews} />
+              </Switch>
+            </Suspense>
           </>
         )}
       </>

@@ -90,9 +90,9 @@ const MovieTitle = styled.p`
 `;
 
 const MoviePoster = styled.img.attrs(({ src, alt }) => ({
-  src:
-    src ||
-    'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
+  src: src
+    ? `http://image.tmdb.org/t/p/w500${src}`
+    : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png',
 
   alt: `Poster of ${alt}` || 'Poster',
 }))`
@@ -101,9 +101,6 @@ const MoviePoster = styled.img.attrs(({ src, alt }) => ({
 `;
 
 function MovieListItem({ id, title, votes, releaseDate, poster, location }) {
-  if (poster) {
-    poster = `http://image.tmdb.org/t/p/w500${poster}`;
-  }
   return (
     <Item>
       <Link
