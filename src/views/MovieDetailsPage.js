@@ -92,9 +92,13 @@ class MovieDetailsPage extends Component {
     exactMovie: null,
     loading: false,
     error: null,
+    realState: null,
   };
 
   componentDidMount() {
+    const {
+      location: { state },
+    } = this.props;
     this.setState({
       loading: true,
     });
@@ -104,6 +108,7 @@ class MovieDetailsPage extends Component {
       .then(result => {
         this.setState({
           exactMovie: result,
+          realState: state,
         });
       })
       .catch(error => this.setState({ error }))
@@ -115,13 +120,11 @@ class MovieDetailsPage extends Component {
   }
 
   handleGoBack = () => {
-    const {
-      location: { state },
-      history,
-    } = this.props;
-
-    if (state && state.from) {
-      return history.push(state.from);
+    const { history } = this.props;
+    const { realState } = this.state;
+    console.log(realState);
+    if (realState && realState.from) {
+      return history.push(realState.from);
     }
     history.push(routes.movies);
   };
