@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import routes from '../routes';
+import routesPaths from '../routesPaths';
 
 const Nav = styled.nav`
   padding: 2rem 4rem;
@@ -29,10 +29,10 @@ const Item = styled(NavLink).attrs(props => ({
 function Navigation() {
   return (
     <Nav>
-      <Item to={routes.home} exact>
+      <Item to={routesPaths.home} exact>
         Home
       </Item>
-      <Item to={routes.movies}>Movies</Item>
+      <Item to={routesPaths.movies}>Movies</Item>
     </Nav>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import routes from '../routes';
+import routesPaths from '../routesPaths';
 import PropTypes from 'prop-types';
 
 const Item = styled.li`
@@ -104,7 +104,10 @@ function MovieListItem({ id, title, votes, releaseDate, poster, location }) {
   return (
     <Item>
       <Link
-        to={{ pathname: `${routes.movies}/${id}`, state: { from: location } }}
+        to={{
+          pathname: `${routesPaths.movies}/${id}`,
+          state: { from: location },
+        }}
       >
         <Overlay>
           <MovieRate>{votes}</MovieRate>

@@ -2,7 +2,7 @@ import React, { Component, lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import fetchApi from '../services/fetchApi';
-import routes from '../routes';
+import routesPaths from '../routesPaths';
 import DetailsNavigation from '../components/DetailsNavigation';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
@@ -126,7 +126,7 @@ class MovieDetailsPage extends Component {
     if (realState && realState.from) {
       return history.push(realState.from);
     }
-    history.push(routes.movies);
+    history.push(routesPaths.movies);
   };
 
   render() {
